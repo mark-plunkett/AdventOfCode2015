@@ -1,7 +1,4 @@
 ﻿open System
-let tee f a =
-    f a
-    a
 
 module Part1 =
     let vowels = Set.ofList ['a';'e';'i';'o';'u']
@@ -23,9 +20,7 @@ module Part1 =
         forbiddenStrings
         |> Set.exists s.Contains
 
-    let isNiceString s =
-        [containsThreeVowels; containsDoubleChar; containsForbiddenString >> not]
-        |> List.forall (fun predicate -> predicate s)
+    let predicates = [containsThreeVowels; containsDoubleChar; containsForbiddenString >> not]
 
 module Part2 =
     let containsPair (s: string) =
@@ -49,20 +44,18 @@ module Part2 =
         |> Seq.windowed 3
         |> Seq.exists (fun a -> a.[0] = a.[2])
 
-    let isNiceString s =
-        [containsPair; containsXYX]
-        |> List.forall (fun predicate -> predicate s)
+    let predicates = [containsPair; containsXYX]
 
 [<EntryPoint>]
 let main argv =
-    let countNiceStrings predicate strings =
+    let countNiceStrings predicates strings =
         strings
-        |> Seq.filter predicate
+        |> Seq.filter (fun s -> List.forall (fun p -> p s) predicates)
         |> Seq.length
    
     Seq.initInfinite (fun _ -> Console.ReadLine())
     |> Seq.takeWhile (String.IsNullOrEmpty >> not)
-    |> countNiceStrings Part2.isNiceString
+    |> countNiceStrings Part2.predicates
     |> printfn "%i"
     
     0
