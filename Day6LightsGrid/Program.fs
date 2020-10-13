@@ -28,7 +28,7 @@ let runCommand grid (command, p1, p2) =
     updateGrid grid p1 p2 command
 
 let buildGrid w h commands =
-    let grid = Array2D.create w h 0 in Seq.iter (runCommand grid) |> ignore
+    let grid = Array2D.create w h 0 in Seq.iter (runCommand grid) commands |> ignore
     grid
 
 module Part1 =
