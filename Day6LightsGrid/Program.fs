@@ -19,7 +19,7 @@ let parseCommand command fToggle fTurnOn fTurnOff =
         | _ -> failwith "unsupported command"
     parsed, (point x1 y1), (point x2 y2)
 
-let updateGrid<'t> (grid: 't[,]) p1 p2 f =
+let updateGrid (grid: int[,]) p1 p2 f =
     for x in [p1.X..p2.X] do
         for y in [p1.Y..p2.Y] do
             grid.[x,y] <- f grid.[x,y]
