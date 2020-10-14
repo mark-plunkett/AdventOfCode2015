@@ -27,10 +27,6 @@ let updateGrid (grid: int[,]) p1 p2 f =
 let runCommand grid (command, p1, p2) =
     updateGrid grid p1 p2 command
 
-let buildGrid w h commands =
-    let grid = Array2D.create w h 0 in Seq.iter (runCommand grid) commands |> ignore
-    grid
-
 module Part1 =
 
     let toggle i = if i = 0 then 1 else 0
@@ -51,7 +47,10 @@ let main argv =
     Seq.initInfinite (fun _ -> Console.ReadLine())
     |> Seq.takeWhile (String.IsNullOrEmpty >> not)
     |> Seq.map Part2.parse
-    |> buildGrid 1000 1000
+    |> Seq.fold (fun grid (command, p1, p2) ->
+        updateGrid grid p1 p2 command
+        grid
+    ) (Array2D.create 1000 1000 0)
     |> Seq.cast<int>
     |> Seq.sum
     |> printfn "%i"
