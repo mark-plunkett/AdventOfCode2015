@@ -1,0 +1,5 @@
+123 -> x
+456 -> y
+x AND y -> d
+d RSHIFT 2 -> e
+NOT e -> f
