@@ -31,10 +31,6 @@ let main argv =
         |> Seq.takeWhile (String.IsNullOrEmpty >> not)
         |> Seq.toArray
 
-    input
-    |> Seq.map Part2.escapeEscapeChars
-    |> Seq.iter (printfn "%s")
-
     printfn "%i" (Part2.solve input)
 
     0
