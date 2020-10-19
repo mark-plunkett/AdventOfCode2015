@@ -71,6 +71,7 @@ let evalCommand commandMap c =
                     | RShift (s, shift) -> (getGateArg s) >>> shift
                 cache.TryAdd(command.Destination, v) |> ignore
                 v
+                
     and getGateArg source =
         match source with
         | Value v -> v
